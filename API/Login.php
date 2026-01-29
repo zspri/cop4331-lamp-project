@@ -1,58 +1,68 @@
 
 <?php
+/* 
+Input input Json 
+{ "login": "someLogin", "password": "somePass" }
 
-	$inData = getRequestInfo();
-	
-	$id = 0;
-	$firstName = "";
-	$lastName = "";
+Output Json 
+{ "success": true, "message": "Login successful", "data": { "userId": 1, "firstName": "...", "lastName": "..." } }
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 	
-	if( $conn->connect_error )
-	{
-		returnWithError( $conn->connect_error );
-	}
-	else
-	{
-		$stmt = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
-		$stmt->bind_param("ss", $inData["login"], $inData["password"]);
-		$stmt->execute();
-		$result = $stmt->get_result();
+*/
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/db.php");
 
-		if( $row = $result->fetch_assoc()  )
-		{
-			returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
-		}
-		else
-		{
-			returnWithError("No Records Found");
-		}
+$data = get_json_body();
 
-		$stmt->close();
-		$conn->close();
-	}
-	
-	function getRequestInfo()
-	{
-		return json_decode(file_get_contents('php://input'), true);
-	}
+$login = trim($data["login"] ?? "");
+$password = trim($data["password"] ?? "");
 
-	function sendResultInfoAsJson( $obj )
-	{
-		header('Content-type: application/json');
-		echo $obj;
-	}
-	
-	function returnWithError( $err )
-	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
-		sendResultInfoAsJson( $retValue );
-	}
-	
-	function returnWithInfo( $firstName, $lastName, $id )
-	{
-		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
-		sendResultInfoAsJson( $retValue );
-	}
-	
-?>
+if ($login === "" || $password === "") {
+    send_json(400, [
+        "success" => false,
+        "message" => "Missing required fields: login, password"
+    ]);
+}
+
+try {
+    $conn = get_db_connection();
+
+    // Schema: Users(Login, Password)
+    $stmt = $conn->prepare("SELECT ID, FirstName, LastName, Password FROM Users WHERE Login = ?");
+    $stmt->bind_param("s", $login);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 0) {
+        send_json(401, [
+            "success" => false,
+            "message" => "Invalid login or password"
+        ]);
+    }
+
+    $user = $result->fetch_assoc();
+
+   // plaintext password
+    if ($user["Password"] !== $password) {
+        send_json(401, [
+            "success" => false,
+            "message" => "Invalid login or password"
+        ]);
+    }
+
+    send_json(200, [
+        "success" => true,
+        "message" => "Login successful",
+        "data" => [
+            "userId" => (int)$user["ID"],
+            "firstName" => $user["FirstName"],
+            "lastName" => $user["LastName"]
+        ]
+    ]);
+
+} catch (mysqli_sql_exception $e) {
+    send_json(500, [
+        "success" => false,
+        "message" => "Database error"
+        
+    ]);
+}
