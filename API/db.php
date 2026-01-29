@@ -4,7 +4,7 @@ function get_db_connection(): mysqli
 {
     
     $DB_HOST = "localhost";
-    $DB_NAME = "COP4311";
+    $DB_NAME = "COP4331";
     $DB_USER = "root";
     $DB_PASS = "";
     $DB_PORT = 3306;
