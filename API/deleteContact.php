@@ -1,48 +1,57 @@
 <?php
-// api/deleteContact.php
-require_once(__DIR__ . "/config.php");
-require_once(__DIR__ . "/db.php");
+    
+	$inData = getRequestInfo();
 
-$data = get_json_body();
+	$id     = $inData["id"];
+	$userId = $inData["userId"];
 
-// Expected input:
-// { "userId":123, "contactId":456 }
-$userId    = $data["userId"] ?? null;
-$contactId = $data["contactId"] ?? null;
+	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+	if ($conn->connect_error)
+	{
+		returnWithError($conn->connect_error);
+	}
+	else
+	{
+		$stmt = $conn->prepare(
+			"DELETE FROM Contacts WHERE ID = ? AND UserID = ?"
+		);
+		$stmt->bind_param("ii", $id, $userId);
+		$stmt->execute();
 
-if (!$userId || !$contactId) {
-    send_json(400, [
-        "success" => false,
-        "message" => "Missing required fields: userId, contactId"
-    ]);
-}
+		if ($stmt->affected_rows > 0)
+		{
+			returnWithInfo($id);
+		}
+		else
+		{
+			returnWithError("Contact Could Not Be Deleted");
+		}
 
-$stmt = $conn->prepare(
-    "DELETE FROM Contacts WHERE ID = ? AND UserID = ?"
-);
-$stmt->bind_param("ii", $contactId, $userId);
+		$stmt->close();
+		$conn->close();
+	}
 
-if (!$stmt->execute()) {
-    send_json(500, [
-        "success" => false,
-        "message" => "Failed to delete contact"
-    ]);
-}
+	function getRequestInfo()
+	{
+		return json_decode(file_get_contents('php://input'), true);
+	}
 
-if ($stmt->affected_rows === 0) {
-    send_json(404, [
-        "success" => false,
-        "message" => "Contact not found or does not belong to user"
-    ]);
-}
+	function sendResultInfoAsJson($obj)
+	{
+		header('Content-type: application/json');
+		echo $obj;
+	}
 
-$stmt->close();
+	function returnWithError($err)
+	{
+		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		sendResultInfoAsJson($retValue);
+	}
 
-send_json(200, [
-    "success" => true,
-    "message" => "Contact deleted successfully",
-    "data" => [
-        "deleted" => true,
-        "contactId" => $contactId
-    ]
-]);
+	function returnWithInfo($id)
+	{
+		$retValue = '{"id":' . $id . ',"firstName":"","lastName":"","error":""}';
+		sendResultInfoAsJson($retValue);
+	}
+
+?>
