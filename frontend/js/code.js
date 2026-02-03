@@ -1,4 +1,4 @@
-const urlBase = 'http://cop4331lamp.zachspri.ng/backend/';
+const urlBase = 'https://cop4331lamp.zachspri.ng/backend';
 const extension = 'php';
 
 let userId = 0;
