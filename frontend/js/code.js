@@ -13,7 +13,7 @@ function doLogin()
 	
 	let login = document.getElementById("loginName").value;
 	let password = document.getElementById("loginPassword").value;
-//	var hash = md5( password );
+	// var hash = md5( password );
 	
 	document.getElementById("loginResult").innerHTML = "";
 
@@ -33,7 +33,7 @@ function doLogin()
 			if (this.readyState == 4 && this.status == 200) 
 			{
 				let jsonObject = JSON.parse( xhr.responseText );
-				userId = jsonObject.id;
+				userId = jsonObject.data.userId;
 		
 				if( userId < 1 )
 				{		
@@ -41,8 +41,8 @@ function doLogin()
 					return;
 				}
 		
-				firstName = jsonObject.firstName;
-				lastName = jsonObject.lastName;
+				firstName = jsonObject.data.firstName;
+				lastName = jsonObject.data.lastName;
 
 				saveCookie();
 	
@@ -113,7 +113,7 @@ function addColor()
 	let newColor = document.getElementById("colorText").value;
 	document.getElementById("colorAddResult").innerHTML = "";
 
-	let tmp = {color:newColor,userId,userId};
+	let tmp = {color:newColor,userId:userId};
 	let jsonPayload = JSON.stringify( tmp );
 
 	let url = urlBase + '/addContact.' + extension;
