@@ -204,9 +204,15 @@ function searchContact()
                         let contact = jsonObject.results[i];
                         contactList += `
                         <div class="contact">
-                            <span class="contact-name">${contact.firstName} + ${contact.lastName}</span>
-                            <a class="contact-phone" href="tel:${contact.phone}">${contact.phone}</a>
-                            <a class="contact-email" href="mailto:${contact.email}">${contact.email}</a>
+                            <span class="contact-name">${contact.firstName} ${contact.lastName}</span>
+                            <a class="contact-phone" href="tel:${contact.phone}">
+                                <i class="fas fa-phone"></i>
+                                ${contact.phone}
+                            </a>
+                            <a class="contact-email" href="mailto:${contact.email}">
+                                <i class="fas fa-envelope"></i>
+                                ${contact.email}
+                            </a>
                         </div>
                         `
                     }

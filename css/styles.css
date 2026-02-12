@@ -108,10 +108,26 @@ input:focus {
     grid-column: span 2;
 }
 
+#contactList {
+    margin-top: 15px;
+    background: #f9f9f9;
+    padding: 10px;
+    border-left: 4px solid #4B0082;
+}
+
 #contactList .contact {
     color: black;
 }
 
 #contactList .contact span, #contactList .contact a {
     display: block;
+}
+
+#contactList .contact .contact-name {
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+#contactList .contact .contact-email, #contactList .contact .contact-phone {
+    color: #4B0082;
 }
