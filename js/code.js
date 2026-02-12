@@ -128,12 +128,14 @@ function doLogout()
 // ADD CONTACT
 function addContact()
 {
+    // Matches the ID "contactText" in your color.html
     let newContact = document.getElementById("contactText").value;
     document.getElementById("contactAddResult").innerHTML = "";
 
     let tmp = { contact: newContact, userId: userId };
     let jsonPayload = JSON.stringify(tmp);
 
+    // MATCHED TO BACKEND: addContact.php
     let url = urlBase + '/addContact.' + extension;
 
     let xhr = new XMLHttpRequest();
@@ -146,7 +148,9 @@ function addContact()
         {
             if (this.readyState == 4 && this.status == 200) 
             {
-                document.getElementById("contactAddResult").innerHTML = "Contact has been added";
+                // Matches the ID "contactAddResult" in your color.html
+                document.getElementById("contactAddResult").innerHTML = "Record Commit Successful";
+                document.getElementById("contactText").value = ""; 
             }
         };
         xhr.send(jsonPayload);
@@ -164,10 +168,10 @@ function searchContact()
     document.getElementById("contactSearchResult").innerHTML = "";
 
     let contactList = "";
-
     let tmp = { search: srch, userId: userId };
     let jsonPayload = JSON.stringify(tmp);
 
+    // MATCHED TO BACKEND: searchContact.php
     let url = urlBase + '/searchContact.' + extension;
 
     let xhr = new XMLHttpRequest();
@@ -180,11 +184,13 @@ function searchContact()
         {
             if (this.readyState == 4 && this.status == 200) 
             {
-                document.getElementById("contactSearchResult").innerHTML = "Contact(s) retrieved";
-
+                // Matches the ID "contactSearchResult" in your color.html
+                document.getElementById("contactSearchResult").innerHTML = "Dossier Retrieved";
+                
                 let jsonObject = JSON.parse(xhr.responseText);
-
-                let displayPara = document.getElementsByTagName("p")[0];
+                
+                // Matches the ID "contactList" in your color.html
+                let displayPara = document.getElementById("contactList");
 
                 if (displayPara && jsonObject.results)
                 {
@@ -194,7 +200,6 @@ function searchContact()
                         if (i < jsonObject.results.length - 1)
                             contactList += "<br />\r\n";
                     }
-
                     displayPara.innerHTML = contactList;
                 }
             }
