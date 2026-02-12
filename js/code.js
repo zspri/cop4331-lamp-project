@@ -174,7 +174,7 @@ function searchContact()
     const search = document.getElementById("searchText").value;
     document.getElementById("contactSearchResult").innerHTML = "";
 
-    const contactList = "";
+    let contactList = "";
     const body = { search, userId: userId };
     const jsonPayload = JSON.stringify(body);
 
@@ -207,10 +207,8 @@ function searchContact()
                             <span class="contact-name">${contact.firstName} + ${contact.lastName}</span>
                             <a class="contact-phone" href="tel:${contact.phone}">${contact.phone}</a>
                             <a class="contact-email" href="mailto:${contact.email}">${contact.email}</a>
+                        </div>
                         `
-                        
-                        if (i < jsonObject.results.length - 1)
-                            contactList += "<br />\r\n";
                     }
                     contactListDiv.innerHTML = contactList;
                 }
