@@ -107,3 +107,11 @@ input:focus {
 .form-grid #searchText, .form-grid #phone, .form-grid #email, .form-grid label.label--full, .form-grid .buttons {
     grid-column: span 2;
 }
+
+#contactList .contact {
+    color: black;
+}
+
+#contactList .contact span, #contactList .contact a {
+    display: block;
+}

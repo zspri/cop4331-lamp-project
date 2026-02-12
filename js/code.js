@@ -171,17 +171,16 @@ function addContact()
 // SEARCH CONTACT
 function searchContact()
 {
-    let srch = document.getElementById("searchText").value;
+    const search = document.getElementById("searchText").value;
     document.getElementById("contactSearchResult").innerHTML = "";
 
-    let contactList = "";
-    let tmp = { search: srch, userId: userId };
-    let jsonPayload = JSON.stringify(tmp);
+    const contactList = "";
+    const body = { search, userId: userId };
+    const jsonPayload = JSON.stringify(body);
 
-    // MATCHED TO BACKEND: searchContact.php
-    let url = urlBase + '/searchContact.' + extension;
+    const url = urlBase + '/searchContact.' + extension;
 
-    let xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
@@ -191,26 +190,29 @@ function searchContact()
         {
             if (this.readyState == 4 && this.status == 200) 
             {
-                // Matches the ID "contactSearchResult" in your color.html
-                document.getElementById("contactSearchResult").innerHTML = "Dossier Retrieved";
-                
                 let jsonObject = JSON.parse(xhr.responseText);
                 
-                // Matches the ID "contactList" in your color.html
-                let displayPara = document.getElementById("contactList");
+                const contactListDiv = document.getElementById("contactList")
 
-                if (displayPara && jsonObject.results)
+                if (contactListDiv && jsonObject.results)
                 {
-                    for (let i = 0; i < jsonObject.results.length; i++)
+                    const numRes = jsonObject.results.length;
+                    document.getElementById("contactSearchResult").innerHTML = `Found ${numRes} result${numRes === 1 ? '': 's'}`;
+
+                    for (let i = 0; i < numRes; i++)
                     {
                         let contact = jsonObject.results[i];
-                        // Access the specific database columns: FirstName and LastName
-                        contactList += contact.FirstName + " " + contact.LastName;
+                        contactList += `
+                        <div class="contact">
+                            <span class="contact-name">${contact.firstName} + ${contact.lastName}</span>
+                            <a class="contact-phone" href="tel:${contact.phone}">${contact.phone}</a>
+                            <a class="contact-email" href="mailto:${contact.email}">${contact.email}</a>
+                        `
                         
                         if (i < jsonObject.results.length - 1)
                             contactList += "<br />\r\n";
                     }
-                    displayPara.innerHTML = contactList;
+                    contactListDiv.innerHTML = contactList;
                 }
             }
         };
