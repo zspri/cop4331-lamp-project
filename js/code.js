@@ -196,7 +196,10 @@ function searchContact()
                 {
                     for (let i = 0; i < jsonObject.results.length; i++)
                     {
-                        contactList += jsonObject.results[i];
+                        let contact = jsonObject.results[i];
+                        // Access the specific database columns: FirstName and LastName
+                        contactList += contact.FirstName + " " + contact.LastName;
+                        
                         if (i < jsonObject.results.length - 1)
                             contactList += "<br />\r\n";
                     }
