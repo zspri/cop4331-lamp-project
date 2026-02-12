@@ -101,7 +101,7 @@ input:focus {
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: .5rem;
+    gap: .5rem;
 }
 
 .form-grid #searchText, .form-grid #phone, .form-grid #email, .form-grid label.label--full, .form-grid .buttons {
@@ -113,6 +113,8 @@ input:focus {
     background: #f9f9f9;
     padding: 10px;
     border-left: 4px solid #4B0082;
+    display: grid;
+    gap: .25rem;
 }
 
 #contactList .contact {

@@ -206,11 +206,11 @@ function searchContact()
                         <div class="contact">
                             <span class="contact-name">${contact.firstName} ${contact.lastName}</span>
                             <a class="contact-phone" href="tel:${contact.phone}">
-                                <i class="fas fa-phone"></i>
+                                <i class="fa-solid fa-phone"></i>
                                 ${contact.phone}
                             </a>
                             <a class="contact-email" href="mailto:${contact.email}">
-                                <i class="fas fa-envelope"></i>
+                                <i class="fa-solid fa-envelope"></i>
                                 ${contact.email}
                             </a>
                         </div>
