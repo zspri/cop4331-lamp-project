@@ -17,7 +17,7 @@
 </head>
 <body>
 
-    <h1 id="title">Central Contact Directory</h1>
+    <h1 class="title">Central Contact Directory</h1>
 
     <div id="terminal-wrapper" style="width: 600px; margin: 0 auto;">
         
@@ -27,15 +27,13 @@
         </div>
 
         <div id="accessUIDiv" style="background-color: white; padding: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: left;">
-            <span id="inner-title" style="display: block; font-size: 0.8em; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; color: #4B0082; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Directory Operations</span>
+            <span class="inner-title">Search contacts</span>
 
             <div class="field-group" style="margin-bottom: 30px;">
-                <label for="searchText" style="display: block; font-size: 0.7em; font-weight: bold; text-transform: uppercase; color: #666; margin-bottom: 5px;">Search Terminal Records</label>
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="searchText" placeholder="Enter Parameter to Search" style="flex: 2; padding: 12px; border: 1px solid #ccc; font-family: 'Ubuntu', sans-serif;" />
-                    
-                    <!-- RENAMED -->
-                    <button type="button" id="searchContactButton" class="buttons" onclick="searchContact();" style="flex: 1; background-color: #4B0082; color: white; border: none; font-weight: bold; cursor: pointer;">Execute Search</button>
+                <div class="form-grid">
+                    <label for="searchText" class="label--full">Search Term</label>
+                    <input type="text" id="searchText" placeholder="Enter Parameter to Search" />
+                    <button type="button" id="searchContactButton" class="buttons" onclick="searchContact();">Search</button>
                 </div>
 
                 <!-- RENAMED -->
@@ -50,14 +48,17 @@
             <div style="height: 1px; background: #eee; margin: 30px 0;"></div>
 
             <div class="field-group">
-                <label for="contactText" style="display: block; font-size: 0.7em; font-weight: bold; text-transform: uppercase; color: #666; margin-bottom: 5px;">Initialize New Record</label>
-                <div style="display: flex; gap: 10px;">
-                    
-                    <!-- RENAMED -->
-                    <input type="text" id="contactText" placeholder="Enter Contact Data" style="flex: 2; padding: 12px; border: 1px solid #ccc; font-family: 'Ubuntu', sans-serif;" />
-                    
-                    <!-- RENAMED -->
-                    <button type="button" id="addContactButton" class="buttons" onclick="addContact();" style="flex: 1; background-color: #4B0082; color: white; border: none; font-weight: bold; cursor: pointer;">Commit to Database</button>
+            <span class="inner-title">Add new contact</span>
+                <div class="form-grid">
+                    <label for="firstName">First name</label>
+                    <label for="lastName">Last name</label>
+                    <input type="text" id="firstName" placeholder="John" />
+                    <input type="text" id="lastName" placeholder="Aedo" />
+                    <label for="phone" class="label--full">Phone number</label>
+                    <input type="tel" id="phone" placeholder="407-823-5555" />
+                    <label for="email" class="label--full">Email address</label>
+                    <input type="email" id="email" placeholder="john.aedo@ucf.edu" />
+                    <button type="button" id="addContactButton" class="buttons" onclick="addContact();">Add Contact</button>
                 </div>
 
                 <!-- RENAMED -->

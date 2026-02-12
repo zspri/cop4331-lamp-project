@@ -58,6 +58,16 @@ function doLogin()
     }
 }
 
+function doLogout()
+{
+    userId = 0;
+    firstName = "";
+    lastName = "";
+
+    document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+    window.location.href = "index.html";
+}
+
 // ---------------- COOKIE ----------------
 
 function saveCookie()
@@ -113,32 +123,30 @@ function readCookie()
     }
 }
 
-function doLogout()
-{
-    userId = 0;
-    firstName = "";
-    lastName = "";
-
-    document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-    window.location.href = "index.html";
-}
-
 // ---------------- CONTACT FUNCTIONS ----------------
 
 // ADD CONTACT
 function addContact()
 {
-    // Matches the ID "contactText" in your color.html
-    let newContact = document.getElementById("contactText").value;
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+    const phone = document.getElementById("phone").value;
+    const email = document.getElementById("email").value;
+
     document.getElementById("contactAddResult").innerHTML = "";
 
-    let tmp = { contact: newContact, userId: userId };
-    let jsonPayload = JSON.stringify(tmp);
+    let body = {
+        userId,
+        firstName,
+        lastName,
+        phone,
+        email,
+    };
+    const jsonPayload = JSON.stringify(body);
 
-    // MATCHED TO BACKEND: addContact.php
-    let url = urlBase + '/addContact.' + extension;
+    const url = urlBase + '/addContact.' + extension;
 
-    let xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
@@ -148,7 +156,6 @@ function addContact()
         {
             if (this.readyState == 4 && this.status == 200) 
             {
-                // Matches the ID "contactAddResult" in your color.html
                 document.getElementById("contactAddResult").innerHTML = "Record Commit Successful";
                 document.getElementById("contactText").value = ""; 
             }
