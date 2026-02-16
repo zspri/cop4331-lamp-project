@@ -59,19 +59,19 @@ function doLogin()
 }
 
 function doRegister() {
-    var firstName = document.getElementById("firstName").value;
-    var lastName = document.getElementById("lastName").value;
-    var login = document.getElementById("loginName").value;
-    var password = document.getElementById("loginPassword").value;
+    var regfirstName = document.getElementById("firstName").value;
+    var reglastName = document.getElementById("lastName").value;
+    var reglogin = document.getElementById("loginName").value;
+    var regpassword = document.getElementById("loginPassword").value;
 
     document.getElementById("loginResult").innerHTML = "";
 
-    var url = urlBase + '/Register.' + extension;
+    var url = urlBase + '/register.' + extension;
     var payload = JSON.stringify({
-        firstName: firstName,
-        lastName: lastName,
-        login: login,
-        password: password
+        firstName: regfirstName,
+        lastName: reglastName,
+        login: reglogin,
+        password: regpassword
     });
 
     var xhr = new XMLHttpRequest();
@@ -83,7 +83,7 @@ function doRegister() {
             if (this.readyState == 4 && this.status == 200) {
                 var jsonObject = JSON.parse(xhr.responseText);
 
-                if (jsonObject.error) {
+                if (jsonObject.error && jsonObject.error.length > 0) {
                     document.getElementById("loginResult").innerHTML = jsonObject.error;
                     return;
                 }
