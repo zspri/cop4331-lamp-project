@@ -61,5 +61,31 @@
     <footer class="terminal-footer">
         &copy; 2026 CENTRAL ASSET DIRECTORY | SECURE PORTAL
     </footer>
+
+    <!-- Edit Contact Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="inner-title">Edit Contact</span>
+                <span class="close" onclick="closeEditModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editContactId" />
+                <div class="form-grid">
+                    <label for="editFirstName">First name</label>
+                    <label for="editLastName">Last name</label>
+                    <input type="text" id="editFirstName" placeholder="John" />
+                    <input type="text" id="editLastName" placeholder="Aedo" />
+                    <label for="editPhone" class="label--full">Phone number</label>
+                    <input type="tel" id="editPhone" placeholder="407-823-5555" />
+                    <label for="editEmail" class="label--full">Email address</label>
+                    <input type="email" id="editEmail" placeholder="john.aedo@ucf.edu" />
+                    <button type="button" class="buttons" onclick="updateContact();">Save Changes</button>
+                    <button type="button" class="secondary-button" onclick="closeEditModal();">Cancel</button>
+                </div>
+                <span id="editContactResult" class="result"></span>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
