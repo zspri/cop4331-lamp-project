@@ -185,7 +185,7 @@ input:focus {
     margin: 0 auto;
 }
 
-#section-masthead {
+#sestion-masthead {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -216,7 +216,7 @@ input:focus {
     margin-bottom: 30px;
 }
 
-#contactSearchResult {
+.result {
     display: block;
     font-size: 0.8em;
     margin-top: 5px;
