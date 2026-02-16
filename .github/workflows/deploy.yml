@@ -21,4 +21,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/html/cop4331-lamp-project
+            git stash && git stash drop
             git pull origin main
