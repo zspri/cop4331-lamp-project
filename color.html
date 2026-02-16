@@ -6,7 +6,6 @@
     <title>COP 4331 | Central Asset Directory</title>
     <link href="css/styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/solid.min.css" integrity="sha512-EHa6vH03/Ty92WahM0/tet1Qicl76zihDCkBnFhN3kFGQkC+mc86d7V+6y2ypiLbk3h0beZAGdUpzfMcb06cMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="text/javascript" src="js/code.js"></script>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
@@ -15,38 +14,30 @@
     </script>
 </head>
 <body class="terminal-body">
-
     <a href="index.html" class="corner-nav-link">
         <img src="images/cornerlogo.png" alt="Exit" class="corner-nav-logo">
     </a>
-
     <header class="brand-hero">
         <img src="images/toplogo.png" alt="Central Asset Directory" class="hero-logo">
     </header>
-
-    <div id="terminal-wrapper" style="width: 600px; margin: 0 auto;">
-        
-        <div id="session-masthead" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: white; font-family: 'Ubuntu', sans-serif; font-size: 0.9em;">
+    <main id="terminal-wrapper">
+        <div id="session-masthead">
             <span id="userName">Verifying Identity...</span>
-            <button type="button" id="logoutButton" class="terminate-btn" onclick="doLogout();" style="background-color: #4B0082; color: white; border: none; padding: 8px 15px; cursor: pointer; font-weight: bold; text-transform: uppercase;">Terminate Session</button>
+            <button type="button" id="logoutButton" onclick="doLogout();">Terminate Session</button>
         </div>
-
-        <div id="accessUIDiv" style="background-color: white; padding: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: left;">
+        <div id="accessUIDiv">
             <span class="inner-title">Search contacts</span>
-
-            <div class="field-group" style="margin-bottom: 30px;">
+            <div class="field-group">
                 <div class="form-grid">
                     <label for="searchText" class="label--full">Search Term</label>
                     <input type="text" id="searchText" placeholder="Enter Parameter to Search" />
                     <button type="button" id="searchContactButton" class="buttons" onclick="searchContact();">Search</button>
                 </div>
-                <span id="contactSearchResult" style="display: block; font-size: 0.8em; margin-top: 5px; color: #4B0082; font-weight: bold;"></span>
+                <span id="contactSearchResult" class="result"></span>
                 <div id="contactList">
                 </div>
             </div>
-
-            <div style="height: 1px; background: #eee; margin: 30px 0;"></div>
-
+            <div class="hr"></div>
             <div class="field-group">
             <span class="inner-title">Add new contact</span>
                 <div class="form-grid">
@@ -62,10 +53,10 @@
                 </div>
 
                 <!-- RENAMED -->
-                <span id="contactAddResult" style="display: block; font-size: 0.8em; margin-top: 5px; color: #4B0082; font-weight: bold;"></span>
+                <span id="contactAddResult" class="result"></span>
             </div>
         </div>
-    </div>
+    </main>
 
     <footer class="terminal-footer">
         &copy; 2026 CENTRAL ASSET DIRECTORY | SECURE PORTAL
