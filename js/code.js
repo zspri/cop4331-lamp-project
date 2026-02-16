@@ -292,7 +292,7 @@ function searchContact()
                     {
                         let contact = jsonObject.results[i];
                         contactList += `
-                        <div class="contact" id="contact-${contact.ID}">
+                        <div class="contact" id="contact-${contact.id}">
                             <div class="contact-info">
                                 <span class="contact-name">${contact.firstName} ${contact.lastName}</span>
                                 <a class="contact-phone" href="tel:${contact.phone}">
@@ -303,10 +303,10 @@ function searchContact()
                                 </a>
                             </div>
                             <div class="contact-actions">
-                                <button class="edit-btn" onclick="editContact(${contact.ID}, '${contact.firstName.replace(/'/g, "\\'").replace(/"/g, '&quot;')}', '${contact.lastName.replace(/'/g, "\\'").replace(/"/g, '&quot;')}', '${contact.phone}', '${contact.email.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')">
+                                <button class="edit-btn" onclick="editContact(${contact.id}, '${contact.firstName.replace(/'/g, "\\'").replace(/"/g, '&quot;')}', '${contact.lastName.replace(/'/g, "\\'").replace(/"/g, '&quot;')}', '${contact.phone}', '${contact.email.replace(/'/g, "\\'").replace(/\"/g, '&quot;')}')">
                                     Edit
                                 </button>
-                                <button class="delete-btn" onclick="deleteContact(${contact.ID})">
+                                <button class="delete-btn" onclick="deleteContact(${contact.id})">
                                     Delete
                                 </button>
                             </div>
@@ -332,9 +332,17 @@ function deleteContact(contactId)
         return;
     }
 
+    // Validate contactId and userId
+    if (!contactId || !userId || userId <= 0) {
+        let resultElement = document.getElementById("contactSearchResult");
+        resultElement.innerHTML = "✗ Invalid contact or user session. Please refresh and try again.";
+        resultElement.className = "error-message";
+        return;
+    }
+
     const body = {
-        id: contactId,
-        userId: userId
+        id: parseInt(contactId),
+        userId: parseInt(userId)
     };
     const jsonPayload = JSON.stringify(body);
 
@@ -374,10 +382,24 @@ function deleteContact(contactId)
                     }, 3000);
                 }
             }
+            else if (this.readyState == 4 && this.status == 400)
+            {
+                // Parse the error response to show specific message
+                try {
+                    let errorObject = JSON.parse(xhr.responseText);
+                    let resultElement = document.getElementById("contactSearchResult");
+                    resultElement.innerHTML = "✗ " + (errorObject.error || "Bad request. Please check your input.");
+                } catch(e) {
+                    let resultElement = document.getElementById("contactSearchResult");
+                    resultElement.innerHTML = "✗ Bad request. Please check your input.";
+                }
+                let resultElement = document.getElementById("contactSearchResult");
+                resultElement.className = "error-message";
+            }
             else if (this.readyState == 4 && this.status != 200)
             {
                 let resultElement = document.getElementById("contactSearchResult");
-                resultElement.innerHTML = "✗ Error deleting contact. Please try again.";
+                resultElement.innerHTML = "✗ Error deleting contact (Status: " + this.status + "). Please try again.";
                 resultElement.className = "error-message";
             }
         };
@@ -431,6 +453,13 @@ function updateContact()
     editResultElement.innerHTML = "";
     editResultElement.className = "";
 
+    // Validate contactId and userId
+    if (!contactId || contactId === "0" || !userId || userId <= 0) {
+        editResultElement.innerHTML = "✗ Invalid contact or user session. Please refresh and try again.";
+        editResultElement.className = "error-message";
+        return;
+    }
+
     // Validate fields
     if (!firstName.trim() || !lastName.trim() || !phone.trim() || !email.trim()) {
         editResultElement.innerHTML = "✗ Please fill in all fields";
@@ -439,12 +468,12 @@ function updateContact()
     }
 
     const body = {
-        userId: userId,
+        userId: parseInt(userId),
         contactId: parseInt(contactId),
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone,
-        email: email
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        phone: phone.trim(),
+        email: email.trim()
     };
     const jsonPayload = JSON.stringify(body);
 
@@ -476,9 +505,20 @@ function updateContact()
                     }, 1500);
                 }
             }
+            else if (this.readyState == 4 && this.status == 400)
+            {
+                // Parse the error response to show specific message
+                try {
+                    let errorObject = JSON.parse(xhr.responseText);
+                    editResultElement.innerHTML = "✗ " + (errorObject.message || "Bad request. Please check your input.");
+                } catch(e) {
+                    editResultElement.innerHTML = "✗ Bad request. Please check your input.";
+                }
+                editResultElement.className = "error-message";
+            }
             else if (this.readyState == 4 && this.status != 200)
             {
-                editResultElement.innerHTML = "✗ Error updating contact. Please try again.";
+                editResultElement.innerHTML = "✗ Error updating contact (Status: " + this.status + "). Please try again.";
                 editResultElement.className = "error-message";
             }
         };
