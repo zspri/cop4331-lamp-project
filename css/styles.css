@@ -181,11 +181,10 @@ input:focus {
 }
 
 #terminal-wrapper {
-    width: 600px;
     margin: 0 auto;
 }
 
-#sestion-masthead {
+#session-masthead {
     display: flex;
     justify-content: space-between;
     align-items: center;
