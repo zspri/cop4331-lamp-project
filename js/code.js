@@ -58,6 +58,49 @@ function doLogin()
     }
 }
 
+function doRegister() {
+    var firstName = document.getElementById("firstName").value;
+    var lastName = document.getElementById("lastName").value;
+    var login = document.getElementById("loginName").value;
+    var password = document.getElementById("loginPassword").value;
+
+    document.getElementById("loginResult").innerHTML = "";
+
+    var url = urlBase + '/Register.' + extension;
+    var payload = JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+        login: login,
+        password: password
+    });
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try {
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var jsonObject = JSON.parse(xhr.responseText);
+
+                if (jsonObject.error) {
+                    document.getElementById("loginResult").innerHTML = jsonObject.error;
+                    return;
+                }
+
+                document.getElementById("loginResult").innerHTML = "Identity Created Successfully! Redirecting...";
+                
+                setTimeout(function() {
+                    window.location.href = "index.html";
+                }, 2000);
+            }
+        };
+        xhr.send(payload);
+    } catch (err) {
+        document.getElementById("loginResult").innerHTML = err.message;
+    }
+}
+
 function doLogout()
 {
     userId = 0;

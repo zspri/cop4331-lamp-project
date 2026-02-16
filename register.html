@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COP 4331 | Central Contact Directory</title>
+    <script type="text/javascript" src="js/md5.js"></script>
+    <script type="text/javascript" src="js/code.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">   
+</head>
+<body>
+
+    <header class="brand-hero">
+        <img src="images/toplogo.png" alt="Central Asset Directory" class="hero-logo">
+    </header>
+
+    <main id="loginDiv">
+        <span class="inner-title">USER REGISTRATION</span>
+        
+        <form id="registerForm" onsubmit="event.preventDefault(); doRegister();">
+            <div class="field-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" placeholder="First Name" required />
+
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" placeholder="Last Name" required />
+
+                <label for="loginName">Identity Code</label>
+                <input type="text" id="loginName" placeholder="Enter Login" required />
+                
+                <label for="loginPassword">Security Token</label>
+                <input type="password" id="loginPassword" placeholder="Enter Password" required />
+            </div>
+            
+            <button type="submit" id="registerButton" class="buttons">Create Identity</button>
+
+            <button type="button" class="secondary-button" onclick="window.location.href='index.html';">Return to Login</button>
+        </form>
+
+        <span id="loginResult"></span>
+    </main>
+
+    <footer class="terminal-footer">
+        &copy; 2026 CENTRAL ASSET DIRECTORY | SECURE PORTAL
+    </footer>
+</body>
+</html>

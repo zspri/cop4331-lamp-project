@@ -229,3 +229,25 @@ input:focus {
     background: #eee;
     margin: 30px 0;
 }
+
+.secondary-button {
+    display: block;
+    width: 100%;
+    background: none;
+    border: 1px solid #4b0082;
+    color: #4b0082;
+    padding: 18px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.2s ease;
+}
+
+.secondary-button:hover {
+    background-color: #4b0082;
+    color: #FFFFFF;
+}
