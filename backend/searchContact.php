@@ -12,7 +12,7 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT ID, FirstName, LastName, Phone, Email FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ?) AND UserID = ?");
+		$stmt = $conn->prepare("SELECT ID, FirstName, LastName, Phone, Email FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID = ?");
 		$search = "%" . $inData["search"] . "%";
 		$stmt->bind_param("ssi", $search, $search, $inData["userId"]);
 		$stmt->execute();
@@ -69,4 +69,5 @@
 		sendResultInfoAsJson( $retValue );
 	}
 	
+
 ?>
