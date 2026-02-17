@@ -216,25 +216,25 @@ function addContact()
 
     try
     {
-        xhr.onreadystatechange = function() 
+        xhr.onreadystatechange = function()
         {
-            if (this.readyState == 4 && this.status == 200) 
+            if (this.readyState == 4 && (this.status == 200 || this.status == 201))
             {
                 let jsonObject = JSON.parse(xhr.responseText);
-                
+
                 if (jsonObject.error) {
                     contactAddResultElement.innerHTML = jsonObject.error;
                     contactAddResultElement.className = "error-message";
                 } else {
                     contactAddResultElement.innerHTML = "Contact added successfully!";
                     contactAddResultElement.className = "success-message";
-                    
+
                     // Clear all input fields
                     document.getElementById("firstName").value = "";
                     document.getElementById("lastName").value = "";
                     document.getElementById("phone").value = "";
                     document.getElementById("email").value = "";
-                    
+
                     // Clear success message after 3 seconds
                     setTimeout(function() {
                         contactAddResultElement.innerHTML = "";
@@ -242,9 +242,9 @@ function addContact()
                     }, 3000);
                 }
             }
-            else if (this.readyState == 4 && this.status != 200)
+            else if (this.readyState == 4 && this.status != 200 && this.status != 201)
             {
-                contactAddResultElement.innerHTML = "✗ Error adding contact. Please try again.";
+                contactAddResultElement.innerHTML = "Error adding contact. Please try again.";
                 contactAddResultElement.className = "error-message";
             }
         };
