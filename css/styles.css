@@ -110,7 +110,7 @@ input:focus {
     gap: .5rem;
 }
 
-.form-grid #searchText, .form-grid #phone, .form-grid #email, .form-grid label.label--full, .form-grid .buttons {
+.form-grid #searchText, .form-grid #phone, .form-grid #email, .form-grid label.label--full, .form-grid .buttons, .form-grid #editPhone, .form-grid #editEmail {
     grid-column: span 2;
 }
 
