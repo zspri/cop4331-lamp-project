@@ -35,6 +35,20 @@ if ($userId <= 0 || $firstName === "" || $lastName === "") {
 try {
     $conn = get_db_connection();
 
+    // Check if a record exists where ALL fields are identical for this user
+    $dup = $conn->prepare("SELECT ID FROM Contacts WHERE FirstName = ? AND LastName = ? AND Phone = ? AND Email = ? AND UserID = ?");
+    $dup->bind_param("ssssi", $firstName, $lastName, $phone, $email, $userId);
+    $dup->execute();
+    $dupRes = $dup->get_result();
+
+    if ($dupRes->num_rows > 0) {
+        send_json(409, [ 
+            "success" => false,
+            "message" => "This exact contact already exists in your directory."
+        ]);
+        exit(); 
+    }
+
     // Optional: verify user exists
     $u = $conn->prepare("SELECT ID FROM Users WHERE ID = ?");
     $u->bind_param("i", $userId);
